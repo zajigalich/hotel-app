@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationService} from "../reservation/reservation.service";
 import {Reservation} from "../models/reservation";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservation-form',
@@ -13,7 +14,9 @@ export class ReservationFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private reservationService: ReservationService) {
+    private reservationService: ReservationService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -23,14 +26,32 @@ export class ReservationFormComponent implements OnInit {
       guestName: ['', [Validators.required]],
       guestEmail: new FormControl('', [Validators.required, Validators.email]),
       roomNumber: new FormControl('', Validators.required),
-    })
+    });
+
+    let id = this.activatedRoute.snapshot.params['id'];
+    if (id) {
+      let reservation = this.reservationService.getReservation(id);
+
+      if (reservation) {
+        this.reservationForm.patchValue(reservation);
+      }
+    }
   }
 
   onSubmit() {
     if (this.reservationForm.valid) {
-      let reservation : Reservation = this.reservationForm.value;
+      let reservation: Reservation = this.reservationForm.value;
 
-      this.reservationService.addReservation(reservation)
+      let id = this.activatedRoute.snapshot.params['id'];
+
+      if (id) {
+        this.reservationService.updateReservation(id, reservation);
+      } else {
+        this.reservationService.addReservation(reservation);
+      }
+
+      // this.reservationForm.reset();
+      this.router.navigate(['/list']);
     }
   }
 }

@@ -33,12 +33,12 @@ export class ReservationService {
     reservation.id = Date.now().toString();
     this.reservations.push(reservation);
 
-    console.log(reservation)
     this.saveReservations();
   }
 
-  public updateReservation(updatedReservation: Reservation): void {
-    let index = this.reservations.findIndex(reservation => reservation.id === updatedReservation.id);
+  public updateReservation(id: string, updatedReservation: Reservation): void {
+    updatedReservation.id = id;
+    let index = this.reservations.findIndex(reservation => reservation.id === id);
     this.reservations[index] = updatedReservation;
 
     this.saveReservations();
