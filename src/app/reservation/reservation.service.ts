@@ -1,14 +1,14 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Reservation} from "../models/reservation";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReservationService implements OnInit {
+export class ReservationService {
 
-  private reservations: Reservation[] = [];
+  private readonly reservations: Reservation[] = [];
 
-  ngOnInit(): void {
+  constructor() {
     let storedReservations = localStorage.getItem('reservations');
     this.reservations = storedReservations ? JSON.parse(storedReservations) : [];
   }
@@ -30,8 +30,10 @@ export class ReservationService implements OnInit {
   }
 
   public addReservation(reservation: Reservation): void {
+    reservation.id = Date.now().toString();
     this.reservations.push(reservation);
 
+    console.log(reservation)
     this.saveReservations();
   }
 
