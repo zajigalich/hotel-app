@@ -1,34 +1,35 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Reservation} from "../models/reservation";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
 
-  private readonly reservations: Reservation[] = [];
+  private readonly apiUrl = "http://localhost:3001";
 
-  public getReservations(): Reservation[] {
-    return this.reservations;
+  constructor(private http: HttpClient) {
   }
 
-  public getReservation(id: string): Reservation | undefined {
-    return this.reservations.find(reservation => reservation.id === id);
+  public getReservations(): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/reservations`);
   }
 
-  public deleteReservation(id: string): void {
-    let index = this.reservations.findIndex(reservation => reservation.id === id);
-    this.reservations.splice(index, 1);
+  public getReservation(id: string): Observable<Reservation> {
+    return this.http.get<Reservation>(`${this.apiUrl}/reservations/${id}`);
   }
 
-  public addReservation(reservation: Reservation): void {
-    reservation.id = Date.now().toString();
-    this.reservations.push(reservation);
+  public deleteReservation(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/reservations/${id}`);
   }
 
-  public updateReservation(id: string, updatedReservation: Reservation): void {
-    updatedReservation.id = id;
-    let index = this.reservations.findIndex(reservation => reservation.id === id);
-    this.reservations[index] = updatedReservation;
+  public addReservation(reservation: Reservation): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reservations`, reservation);
+  }
+
+  public updateReservation(id: string, updatedReservation: Reservation): Observable<any> {
+    return this.http.put(`${this.apiUrl}/reservations/${id}`, updatedReservation);
   }
 }

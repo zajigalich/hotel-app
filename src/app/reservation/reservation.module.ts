@@ -17,9 +17,6 @@ import {RouterModule} from "@angular/router";
     HomeModule,
     RouterModule,
   ],
-  providers: [
-    ReservationListComponent,
-  ]
 })
 export class ReservationModule {
 }
