@@ -16,6 +16,9 @@ import {RouterModule} from "@angular/router";
     ReactiveFormsModule,
     HomeModule,
     RouterModule,
+  ],
+  providers: [
+    ReservationListComponent,
   ]
 })
 export class ReservationModule {

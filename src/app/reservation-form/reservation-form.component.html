@@ -1,48 +1,57 @@
 <app-home></app-home>
 
-<h2 class="mt-4">Create a new reservation</h2>
-<form class="row g-3" [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-  <div class="col-md-6">
-    <label>Check-in Date:</label>
-    <input class="form-control" type="date" formControlName="checkInDate">
-    <div class="alert alert-danger p-2 my-2"
-         *ngIf="reservationForm.get('checkInDate')?.invalid && reservationForm.get('checkInDate')?.touched">
-      Check-in date is required
+<h3 class="mt-4">Create a new reservation</h3>
+<form class="g-3" [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col">
+      <label class="form-label">Check-in Date:</label>
+      <input class="form-control" type="date" formControlName="checkInDate">
+      <small class="text-danger my-2"
+             *ngIf="reservationForm.get('checkInDate')?.invalid && reservationForm.get('checkInDate')?.touched">
+        Check-in date is required
+      </small>
+    </div>
+    <div class="col">
+      <label class="form-label">Check-out Date:</label>
+      <input class="form-control" type="date" formControlName="checkOutDate">
+      <small class="text-danger my-2"
+             *ngIf="reservationForm.get('checkOutDate')?.invalid && reservationForm.get('checkOutDate')?.touched">
+        Check-out date is required
+      </small>
     </div>
   </div>
-  <div class="col-md-6">
-    <label>Check-out Date:</label>
-    <input class="form-control" type="date" formControlName="checkOutDate">
-    <div class="alert alert-danger p-2 my-2"
-         *ngIf="reservationForm.get('checkOutDate')?.invalid && reservationForm.get('checkOutDate')?.touched">
-      Check-out date is required
+  <div class="row">
+    <div class="col">
+      <label class="form-label">Guest Name:</label>
+      <input class="form-control" type="text" formControlName="guestName">
+      <small class="text-danger my-2"
+             *ngIf="reservationForm.get('guestName')?.invalid && reservationForm.get('guestName')?.touched">
+        Guest name is required
+      </small>
+    </div>
+    <div class="col">
+      <label class="form-label">Email:</label>
+      <input class="form-control" type="email" formControlName="guestEmail">
+      <small class="text-danger my-2"
+             *ngIf="reservationForm.get('guestEmail')?.invalid && reservationForm.get('guestEmail')?.touched">
+        Email is invalid
+      </small>
     </div>
   </div>
-  <div class="col-md-6">
-    <label>Guest Name:</label>
-    <input class="form-control" type="text" formControlName="guestName">
-    <div class="alert alert-danger  p-2 my-2"
-         *ngIf="reservationForm.get('guestName')?.invalid && reservationForm.get('guestName')?.touched">
-      Guest name is required
+  <div class="row">
+    <div class="col-3">
+      <label class="form-label">Room Number:</label>
+      <input class="form-control" type="number" formControlName="roomNumber">
+      <small class="text-danger my-2"
+             *ngIf="reservationForm.get('roomNumber')?.invalid && reservationForm.get('roomNumber')?.touched">
+        Room number is required
+      </small>
     </div>
   </div>
-  <div class="col-md-6">
-    <label>Email:</label>
-    <input class="form-control" type="email" formControlName="guestEmail">
-    <div class="alert alert-danger p-2 my-2"
-         *ngIf="reservationForm.get('guestEmail')?.invalid && reservationForm.get('guestEmail')?.touched">
-      Email is invalid
+  <div class="row">
+    <div class="col mt-3">
+      <button class="btn btn-primary" type="submit" [disabled]="reservationForm.invalid">Submit</button>
     </div>
   </div>
-  <div class="col-md-3">
-    <label>Room Number:</label>
-    <input class="form-control" type="number" formControlName="roomNumber">
-    <div class="alert alert-danger p-2 my-2"
-         *ngIf="reservationForm.get('roomNumber')?.invalid && reservationForm.get('roomNumber')?.touched">
-      Room number is required
-    </div>
-  </div>
-  <div class="col-md-12">
-    <button class="btn btn-primary" type="submit" [disabled]="reservationForm.invalid">Submit</button>
-  </div>
+
 </form>
