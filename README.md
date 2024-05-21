@@ -1,3 +1,6 @@
+# Setup
+Run `npm install` or `npx install`
+
 # HotelApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
